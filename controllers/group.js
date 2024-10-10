@@ -11,7 +11,7 @@ const createGroup=async(req,res)=>{
         const group =new Group({
             name,
             members,
-            admins:[createdBy], //by default admin 
+            admins:[createdBy],  
             createdBy
 
         })

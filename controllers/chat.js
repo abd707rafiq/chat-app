@@ -5,18 +5,18 @@ const mongoose = require('mongoose');
 
 const multer = require('multer');
 
-// The message API that handles both text and file uploads
+
 const realMessage = async (req, res) => {
     const { receiverId, text } = req.body;
-    let file = null; // Initialize file path for optional file uploads
+    let file = null; 
 
-    // Check if a file was uploaded
+   
     if (req.file) {
-        file = req.file.path; // Save the file path
+        file = req.file.path; 
     }
 
     try {
-        // Find or create the conversation
+        
         let conversation = await Conversation.findOne({
             $or: [
                 { senderId: req.userId, receiverId: receiverId },
@@ -25,33 +25,33 @@ const realMessage = async (req, res) => {
         });
 
         if (!conversation) {
-            // Create a new conversation if none exists
+            
             conversation = new Conversation({
                 senderId: req.userId,
                 receiverId: receiverId,
-                lastMessage: text || filePath, // Use either text or file name as the last message
+                lastMessage: text || filePath, 
                 updatedAt: Date.now(),
             });
             await conversation.save();
         }
 
-        // Create a new message (with text or file or both)
+        
         const message = new Message({
             conversationId: conversation._id,
             senderId: req.userId,
             receiverId: receiverId,
-            text: text || '',  // Default to an empty string if no text is provided
-            file: file || null, // Add the filePath if a file was uploaded
+            text: text || '',  
+            file: file || null,
         });
 
         const savedMessage = await message.save();
 
-        // Update the conversation's last message and time
+        
         conversation.lastMessage = text || filePath;
         conversation.updatedAt = Date.now();
         await conversation.save();
 
-        // Emit the message via WebSocket
+      
         const io = getSocket();
         io.emit('newMessage', savedMessage);
 

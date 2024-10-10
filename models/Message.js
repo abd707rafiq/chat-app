@@ -9,7 +9,7 @@ const MessageSchema = new mongoose.Schema({
     receiverId: { type:  mongoose.Schema.Types.ObjectId, ref: 'User'},
     groupId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Group' // New field for group messages
+        ref: 'Group' 
     },
     text: { type: String, required: false },
     file: { type: String, required: false },

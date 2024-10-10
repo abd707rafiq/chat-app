@@ -5,22 +5,18 @@ const {verifyToken}=require('../middleware/jwt.js')
 const multer = require('multer');
 const path = require('path');
 
-// Configure Multer for storing uploaded files
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/');  // Specify the upload directory
+        cb(null, 'uploads/');  
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname)); // Unique filenames using timestamp
+        cb(null, Date.now() + path.extname(file.originalname)); 
     }
 });
 const upload = multer({ storage: storage });
 
 const router = express.Router();
-
-
-
-
 
 router.post("/message",verifyToken,upload.single('file'), realMessage);
 router.get("/all/:userId",verifyToken,getallConversation);
