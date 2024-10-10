@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 
 
 const ConversationSchema = new mongoose.Schema({
-    senderId: { type:  mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    receiverId: { type:  mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    senderId: { type:  mongoose.Schema.Types.ObjectId, ref: 'User'  },
+    receiverId: { type:  mongoose.Schema.Types.ObjectId, ref: 'User'  },
+    groupId: { type:  mongoose.Schema.Types.ObjectId, ref: 'User' },
     lastMessage: { type: String }, // Optional: for storing the last message text
     updatedAt: { type: Date, default: Date.now }
 });

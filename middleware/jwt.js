@@ -1,5 +1,6 @@
 
 const Jwt = require("jsonwebtoken");
+require('dotenv').config();
 
 
 const verifyToken = (req, res, next) => {
@@ -7,7 +8,7 @@ const verifyToken = (req, res, next) => {
     if (!token) return res.status(401).json({ error: 'Access denied' });
 
     try {
-        const verified = Jwt.verify(token.split(' ')[1], jwt_secret);
+        const verified = Jwt.verify(token.split(' ')[1], process.env.JWT_SECRET);
         req.userId = verified.id;
         next();
     } catch (error) {

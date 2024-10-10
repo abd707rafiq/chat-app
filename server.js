@@ -4,8 +4,10 @@ const http = require('http');
 
 const authRoutes = require("./routes/auth.route");
 const chatRoutes = require("./routes/chat.route");
+const groupRoutes=require("./routes/group.route");
 
 const { initSocket } = require('./socket'); 
+require('dotenv').config();
 
 const app = express();
 
@@ -14,9 +16,10 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
+app.use('/group',groupRoutes);
 
 // MongoDB connection
-mongoose.connect()
+mongoose.connect(process.env.MONGO_DB_URL)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
