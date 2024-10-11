@@ -6,6 +6,10 @@ require('dotenv').config();
 const Register=async(req,res)=>{
     const { username, email, password } = req.body;
     try {
+
+        const validEmail = await User.findOne({ email });
+        if (validEmail) return res.status(400).json({ error: 'Email already in use' });
+        
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await  User.create({ username, email, password: hashedPassword });
         console.log(newUser);

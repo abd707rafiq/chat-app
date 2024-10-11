@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { realMessage, getallConversation, allMessages } = require('../controllers/chat.js');
+const { realMessage, getallConversation, allMessages, markMessageAsRead,} = require('../controllers/chat.js');
 const {verifyToken}=require('../middleware/jwt.js')
 const multer = require('multer');
 const path = require('path');
@@ -21,5 +21,8 @@ const router = express.Router();
 router.post("/message",verifyToken,upload.single('file'), realMessage);
 router.get("/all/:userId",verifyToken,getallConversation);
 router.get("/allm/:conversationId",verifyToken,allMessages);
+
+router.patch("/messageread/:conversationId",verifyToken,markMessageAsRead);
+
 
 module.exports=router;
