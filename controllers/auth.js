@@ -33,7 +33,7 @@ const LogIn=async(req,res)=>{
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) return res.status(400).json({ error: 'Invalid email or password' });
 
-        const token = Jwt.sign({ id: user._id },process.env.JWT_SECRET, { expiresIn: '10h' });
+        const token = Jwt.sign({ id: user._id },process.env.JWT_SECRET, { expiresIn: '48h' });
         res.status(200).json({ token });
     } catch (error) {
         res.status(500).json({ error: 'Error logging in' });

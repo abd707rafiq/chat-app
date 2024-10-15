@@ -6,7 +6,17 @@ const initSocket = (server) => {
     io = new Server(server);
 
     io.on('connection', (socket) => {
-        console.log('A user connected');
+        
+        const query = socket.handshake.query;
+        const userId = query?.userId; 
+        console.log('A user connected:', userId);
+        
+        if (userId) {
+            socket.join(userId); 
+        } else {
+            console.log('No receiverId provided in the query');
+        }
+
         socket.on('disconnect', () => {
             console.log('User disconnected');
         });

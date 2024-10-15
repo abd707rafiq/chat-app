@@ -7,6 +7,8 @@ const ConversationSchema = new mongoose.Schema({
     receiverId: { type:  mongoose.Schema.Types.ObjectId, ref: 'User'  },
     groupId: { type:  mongoose.Schema.Types.ObjectId, ref: 'User' },
     lastMessage: { type: String }, // Optional: for storing the last message text
+
+    archived: { type: Boolean, default: false },
     updatedAt: { type: Date, default: Date.now }
 });
 
